@@ -4,12 +4,13 @@ require 'sinatra/reloader'
 require 'sqlite3'
 
 def init_db
-SQLite3::Database.new 'blog.db'
+db = SQLite3::Database.new 'blog.db'
+db.results_as_hash = true
+return db
 end
 
 configure do
 db = init_db
-db.results_as_hash = true
 db.execute 'create table if not exists posts 
 		(
 		id integer primary key autoincrement,
@@ -27,5 +28,9 @@ get '/new' do
 end
 
 post '/new' do
-  erb "Hello World"
+   post = params[:post]
+  db = init_db
+  db.execute 'insert into posts (content, date_added)
+			  values (?, datetime())', [post] 
+  erb :new
 end
