@@ -20,7 +20,9 @@ db.execute 'create table if not exists posts
 end
 
 get '/' do
-	erb "Hello! <a href=\"https://github.com/bootstrap-ruby/sinatra-bootstrap\">Original</a> pattern has been modified for <a href=\"http://rubyschool.us/\">Ruby School</a>"			
+  db = init_db
+  @results = db.execute 'select * from posts order by id desc' 
+  erb :posts			
 end
 
 get '/new' do
@@ -32,5 +34,5 @@ post '/new' do
   db = init_db
   db.execute 'insert into posts (content, date_added)
 			  values (?, datetime())', [post] 
-  erb :new
+  redirect to '/'
 end
