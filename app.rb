@@ -61,8 +61,8 @@ post '/post/:id' do
   @post_id = params[:id]
   post = params[:post]
   db = init_db
-  db.execute 'insert into commnts (content, date_added, post_id)
+  db.execute 'insert into comments (content, date_added, post_id)
 			  values (?, datetime(), ?)', [post, @post_id] 
-  erb :comments			
-
+  			
+  redirect to '/post/'+ @post_id
 end

@@ -7,7 +7,7 @@
 
  <% end %>
 
-<form action ='/posts/' + <%= @post_id %> method= 'POST'>
+<form action ='/post/<%= @post_id %>' method= 'POST'>
   <textarea name = 'post' class="form-control" rows="3"></textarea><br />
   <button type="submit" class="btn btn-primary">Submit</button>
 </form>
