@@ -17,6 +17,15 @@ db.execute 'create table if not exists posts
 		content text,
 		date_added date
 		)'
+
+db.execute 'create table if not exists comments 
+		(
+		id integer primary key autoincrement,
+		content text,
+		date_added date,
+		post_id integer
+		)'
+
 end
 
 get '/' do
@@ -35,4 +44,9 @@ post '/new' do
   db.execute 'insert into posts (content, date_added)
 			  values (?, datetime())', [post] 
   redirect to '/'
+end
+
+get '/post/:id' do
+    @post_id = params[:id]
+    erb "post #{@post_id}"			
 end
