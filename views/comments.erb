@@ -1,0 +1,13 @@
+<p><%= @post['content']%></p><br />
+<p style='font-size: 75%'>Added at: <%= @post['date_added']%></p><hr/>
+
+ <% @comments.each do |comment| %>
+	<p><%= comment['content']%></p><br />
+	<p style='font-size: 75%'>Added at: <%= comment['date_added']%></p><hr/>
+
+ <% end %>
+
+<form action ='/posts/' + <%= @post_id %> method= 'POST'>
+  <textarea name = 'post' class="form-control" rows="3"></textarea><br />
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>

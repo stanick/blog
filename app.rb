@@ -48,5 +48,21 @@ end
 
 get '/post/:id' do
     @post_id = params[:id]
-    erb "post #{@post_id}"			
+    db = init_db
+    post = db.execute 'select * from posts where id = ?', [@post_id] 
+    @post = post[0]
+
+    @comments = db.execute 'select * from comments where post_id = ? order by id desc', [@post_id] 
+
+    erb :comments			
+end
+
+post '/post/:id' do
+  @post_id = params[:id]
+  post = params[:post]
+  db = init_db
+  db.execute 'insert into commnts (content, date_added, post_id)
+			  values (?, datetime(), ?)', [post, @post_id] 
+  erb :comments			
+
 end
